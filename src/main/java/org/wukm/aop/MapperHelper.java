@@ -29,25 +29,25 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class MapperHelper {
 
-    private static ConcurrentHashMap<Thread,SqlSession> concurrentHashMap = new ConcurrentHashMap<>();
+    private static ThreadLocal<SqlSession> currentSession = new ThreadLocal<>();
 
     private MapperHelper(){}
 
     public synchronized static <T> T mapper(Class<T> target){
-        Thread current = Thread.currentThread();
-        if(concurrentHashMap.get(current) == null){
-            SqlSession session = MybatisKit.session();
-            concurrentHashMap.put(current,session);
+        SqlSession session = currentSession.get();
+        if(session == null){
+            session = MybatisKit.session();
+            currentSession.set(session);
             return session.getMapper(target);
         }
-        return concurrentHashMap.get(current).getMapper(target);
+        return session.getMapper(target);
     }
 
     public synchronized static void close(){
-        Thread current = Thread.currentThread();
-        if(concurrentHashMap.get(current) != null){
-            MybatisKit.close(concurrentHashMap.get(current));
-            concurrentHashMap.remove(current);
+        SqlSession session = currentSession.get();
+        if(session != null){
+            MybatisKit.close(session);
+            currentSession.remove();
         }
     }
 }

@@ -56,7 +56,7 @@ public class SystemConfig extends JFinalConfig {
 
     @Override
     public void configInterceptor(Interceptors me) {
-        me.addGlobalServiceInterceptor(new GlobalInterceptor());
+        me.add(new GlobalInterceptor());
     }
 
     @Override
