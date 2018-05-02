@@ -13,6 +13,7 @@ package org.wukm.plugin;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +34,8 @@ public class MybatisKit {
 
     private static SqlSessionFactory sqlSessionFactory;
 
+    private static SqlSessionManager session;
+
     public static void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
         logger.info("set:{}", sqlSessionFactory);
         MybatisKit.sqlSessionFactory = sqlSessionFactory;
@@ -45,13 +48,20 @@ public class MybatisKit {
     public synchronized static SqlSession session(){
         logger.info("use:{}", sqlSessionFactory);
         logger.info("config:{}", sqlSessionFactory.getConfiguration());
-        SqlSession session = MybatisKit.sqlSessionFactory.openSession();
-        logger.info("start:{}", session);
+        logger.info("config:{}", Thread.currentThread().getName());
+        if(null == session) {
+            session = SqlSessionManager.newInstance(sqlSessionFactory);
+            if (!session.isManagedSessionStarted()) {
+                session.startManagedSession();
+                logger.info("start:{}", session);
+            }
+        }
         return session;
     }
 
-    public static void close(SqlSession session){
+    public static void close(){
         logger.info("close:{}", session);
+        if(session.isManagedSessionStarted())
         session.close();
     }
 }
