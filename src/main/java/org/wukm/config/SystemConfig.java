@@ -10,16 +10,12 @@
  */
 package org.wukm.config;
 
-import com.jfinal.aop.Duang;
 import com.jfinal.config.*;
 import com.jfinal.template.Engine;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
+import org.wukm.controller.HomeController;
+import org.wukm.plugin.MybatisPlugin;
 
 /**
  * Create with IntelliJ IDEA
@@ -38,18 +34,11 @@ public class SystemConfig extends JFinalConfig {
 
     @Override
     public void configConstant(Constants me) {
-        try {
-            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream("mybatis-config.xml"));
-            sqlSessionFactory.openSession();
-            logger.error("sqlSessionFactory:{}", sqlSessionFactory);
-        } catch (IOException e){
-            logger.error("IOException:{}", e.getMessage());
-        }
     }
 
     @Override
     public void configRoute(Routes me) {
-
+        me.add("/", HomeController.class);
     }
 
     @Override
@@ -59,7 +48,9 @@ public class SystemConfig extends JFinalConfig {
 
     @Override
     public void configPlugin(Plugins me) {
-
+        MybatisPlugin mybatisPlugin = new MybatisPlugin();
+        me.add(mybatisPlugin);
+        logger.info("start mybatis..");
     }
 
     @Override
