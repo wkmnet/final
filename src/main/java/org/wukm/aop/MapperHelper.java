@@ -42,4 +42,12 @@ public class MapperHelper {
         }
         return concurrentHashMap.get(current).getMapper(target);
     }
+
+    public synchronized static void close(){
+        Thread current = Thread.currentThread();
+        if(concurrentHashMap.get(current) != null){
+            MybatisKit.close(concurrentHashMap.get(current));
+            concurrentHashMap.remove(current);
+        }
+    }
 }

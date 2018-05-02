@@ -45,10 +45,13 @@ public class MybatisKit {
     public synchronized static SqlSession session(){
         logger.info("use:{}", sqlSessionFactory);
         logger.info("config:{}", sqlSessionFactory.getConfiguration());
-        return MybatisKit.sqlSessionFactory.openSession();
+        SqlSession session = MybatisKit.sqlSessionFactory.openSession();
+        logger.info("start:{}", session);
+        return session;
     }
 
     public static void close(SqlSession session){
+        logger.info("close:{}", session);
         session.close();
     }
 }

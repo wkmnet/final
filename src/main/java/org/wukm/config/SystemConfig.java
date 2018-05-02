@@ -15,6 +15,7 @@ import com.jfinal.template.Engine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wukm.controller.HomeController;
+import org.wukm.plugin.GlobalInterceptor;
 import org.wukm.plugin.MybatisPlugin;
 
 /**
@@ -55,7 +56,7 @@ public class SystemConfig extends JFinalConfig {
 
     @Override
     public void configInterceptor(Interceptors me) {
-
+        me.add(new GlobalInterceptor());
     }
 
     @Override
