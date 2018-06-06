@@ -15,4 +15,5 @@
 * > 本项目通过Guice+Mybatis的方式将Mybatis整合到了JFinal中
 
 ---
-[说明]: 大家想通过JFinal+Mybatis方式开发的可以给大家提供一个参考
+
+* > 说明: **大家想通过JFinal+Mybatis方式开发的可以给大家提供一个参考**
