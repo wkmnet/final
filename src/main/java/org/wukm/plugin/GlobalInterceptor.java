@@ -29,6 +29,5 @@ public class GlobalInterceptor implements Interceptor {
     @Override
     public void intercept(Invocation inv) {
         inv.invoke();
-        MybatisKit.close();
     }
 }

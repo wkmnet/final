@@ -15,6 +15,7 @@ import com.jfinal.template.Engine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wukm.controller.HomeController;
+import org.wukm.kit.GuExtendPlugin;
 import org.wukm.plugin.GlobalInterceptor;
 import org.wukm.plugin.MybatisPlugin;
 
@@ -49,9 +50,10 @@ public class SystemConfig extends JFinalConfig {
 
     @Override
     public void configPlugin(Plugins me) {
-        MybatisPlugin mybatisPlugin = new MybatisPlugin();
-        me.add(mybatisPlugin);
+//        MybatisPlugin mybatisPlugin = new MybatisPlugin();
+//        me.add(mybatisPlugin);
         logger.info("start mybatis..");
+        me.add(new GuExtendPlugin());
     }
 
     @Override

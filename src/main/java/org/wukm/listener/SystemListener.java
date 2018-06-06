@@ -49,10 +49,10 @@ public class SystemListener implements ServletContextListener {
         });
         logger.info("system property:{}{}", SystemUtils.LINE_SEPARATOR, JSONObject.toJSONString(property, SerializerFeature.PrettyFormat));
         LoggerSwitch.switchSLF4J();
+        Runtime.getRuntime().addShutdownHook(new Thread(()->{logger.info("exit:{}",System.currentTimeMillis());}));
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-
     }
 }

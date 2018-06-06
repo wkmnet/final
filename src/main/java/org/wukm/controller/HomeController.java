@@ -13,10 +13,9 @@ package org.wukm.controller;
 import com.jfinal.core.Controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wukm.aop.MapperHelper;
-import org.wukm.mapper.UserMapper;
+import org.wukm.kit.Gu;
 import org.wukm.model.User;
-import org.wukm.plugin.MybatisKit;
+import org.wukm.service.UserService;
 
 /**
  * Create with IntelliJ IDEA
@@ -33,9 +32,9 @@ public class HomeController extends Controller{
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public void index(){
-        UserMapper mapper = MapperHelper.mapper(UserMapper.class);
-        User user = mapper.findUser(10000000L);
+    public void index() throws Exception{
+        UserService userService = Gu.gu(UserService.class);
+        User user = userService.findUserById(10000000L);
         if(user != null) {
             logger.info("user:{}", user.getUserName());
         }
