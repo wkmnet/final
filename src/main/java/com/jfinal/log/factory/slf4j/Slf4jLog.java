@@ -37,13 +37,13 @@ public class Slf4jLog extends Log {
         log = LoggerFactory.getLogger(name);
     }
 
-    public static Slf4jLog getLog(Class<?> clazz) {
-        return new Slf4jLog(clazz);
-    }
-
-    public static Slf4jLog getLog(String name) {
-        return new Slf4jLog(name);
-    }
+//    public static Slf4jLog getLog(Class<?> clazz) {
+//        return new Slf4jLog(clazz);
+//    }
+//
+//    public static Slf4jLog getLog(String name) {
+//        return new Slf4jLog(name);
+//    }
 
     public void info(String message) {
         log.info(message);

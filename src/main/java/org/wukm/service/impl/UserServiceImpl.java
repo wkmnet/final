@@ -13,6 +13,7 @@ package org.wukm.service.impl;
 import com.google.inject.Inject;
 import org.wukm.mapper.UserMapper;
 import org.wukm.model.User;
+import org.wukm.service.CommonService;
 import org.wukm.service.UserService;
 
 /**
@@ -26,7 +27,7 @@ import org.wukm.service.UserService;
  * ---------------------------------
  * To change this template use File | Settings | File and Code Templates.
  */
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends CommonService implements UserService {
 
     @Inject
     UserMapper userMapper;
