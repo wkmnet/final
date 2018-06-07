@@ -8,7 +8,7 @@
  * Time : 下午2:34
  * ---------------------------------
  */
-package org.wukm.plugin;
+package org.wukm.interceptor;
 
 import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;

@@ -10,6 +10,7 @@
  */
 package org.wukm.controller;
 
+import com.google.inject.Inject;
 import com.jfinal.core.Controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,8 +33,10 @@ public class HomeController extends Controller{
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Inject
+    private UserService userService;
+
     public void index() throws Exception{
-        UserService userService = Gu.gu(UserService.class);
         User user = userService.findUserById(10000000L);
         if(user != null) {
             logger.info("user:{}", user.getUserName());
