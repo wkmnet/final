@@ -49,6 +49,7 @@ public class Server {
         Path config = Paths.get(System.getProperty("user.dir"),"conf/server.properties");
         File file = config.toFile();
         if(file.exists() && file.isFile()) {
+            Path data = Paths.get(System.getProperty("user.dir"),"data");
             logger.info("find config:{}", config.toString());
             Properties properties = new Properties();
             try {
@@ -62,8 +63,17 @@ public class Server {
             String context = properties.getProperty("server.context","/");
             String configPort = properties.getProperty("server.port","8080");
             int port = NumberUtils.toInt(configPort,8080);
-            logger.info("server context:{} port:{}", context, port);
-            new JettyServerForIDEA(root.toUri().toString(), port, context).start();
+            File dataFile = data.toFile();
+            if(dataFile.exists()) {
+                if(dataFile.isFile()){
+                    logger.error("start server fail:{}", data.toAbsolutePath().toString());
+                    System.exit(1);
+                }
+            } else {
+                dataFile.mkdir();
+            }
+            logger.info("server context:{} port:{} data:{}", context, port, data.toAbsolutePath().toString());
+            new JettyServer(root.toUri().toString(), port, context, data.toAbsolutePath().toString()).start();
         } else {
             logger.info("not find config:{}", config.toString());
             logger.info("server context:{} port:{}", "/", 8080);
